@@ -124,8 +124,14 @@
         let encontrado = false;
 
         for (let linha of linhas) {
-          const [nome, curso, data_emissao, chave_planilha] = linha.trim().split(",");
-          if (chave_planilha === chave) {
+const colunas = linha.trim().split(",");
+const nome = colunas[0]?.trim();
+const curso = colunas[1]?.trim();
+const data_emissao = colunas[2]?.trim();
+const chave_planilha = colunas[3]?.replace(/[\r\n]+/g, "").trim();
+
+if (chave_planilha === chave) {
+
             document.body.insertAdjacentHTML('beforeend', '<div class="baloes"></div>');
             resultado.innerHTML = `
               <div style="text-align: center; padding: 30px; background: #e0f7fa; border: 2px solid #4caf50; border-radius: 16px;">
