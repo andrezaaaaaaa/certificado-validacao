@@ -5,7 +5,87 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Validação de Certificado - Decole Educacional</title>
   <link rel="icon" type="image/png" href="https://i.ibb.co/pdzFGfS/favicon-decole.png" />
-  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #f4f4f9;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    header {
+      background-color: #ffffff;
+      padding: 30px 10px 20px;
+      border-bottom: 1px solid #ccc;
+    }
+    header img {
+      height: 80px;
+    }
+    h1 {
+      color: #0c344d;
+      font-size: 28px;
+      margin-top: 20px;
+    }
+    input[type="text"] {
+      padding: 10px;
+      width: 90%;
+      max-width: 400px;
+      margin-top: 20px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      border: none;
+      background-color: #2196f3;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #1976d2;
+    }
+    #resultado-validacao {
+      margin: 30px auto;
+      max-width: 600px;
+    }
+    .baloes {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      pointer-events: none;
+      background: url('https://cdn.pixabay.com/photo/2013/07/13/10/24/balloons-157157_1280.png') repeat-x top center;
+      animation: flutuar 10s linear infinite;
+      opacity: 0.15;
+    }
+    @keyframes flutuar {
+      from { background-position-y: 100vh; }
+      to { background-position-y: -200vh; }
+    }
+    footer {
+      background-color: #003c4d;
+      color: white;
+      padding: 20px;
+      margin-top: 60px;
+    }
+    footer a {
+      color: #90caf9;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+    @media (max-width: 600px) {
+      input[type="text"] {
+        width: 95%;
+      }
+      h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -22,167 +102,76 @@
   <footer>
     <p>© 2025 Decole Educacional. Todos os direitos reservados.</p>
     <p>
-      <a href="https://decole.co" target="_blank" rel="noopener noreferrer">Site Oficial</a> |
-      <a href="https://www.instagram.com/decolecontabildigital/" target="_blank" rel="noopener noreferrer">Instagram</a> |
-      <a href="https://wa.me/5508005803080" target="_blank" rel="noopener noreferrer">WhatsApp: 0800 580 3080</a>
+      <a href="https://decole.co" target="_blank">Site Oficial</a> |
+      <a href="https://www.instagram.com/decolecontabildigital/" target="_blank">Instagram</a> |
+      <a href="https://wa.me/5508005803080" target="_blank">WhatsApp: 0800 580 3080</a>
     </p>
   </footer>
 
-  <script src="script.js"></script>
-</body>
-</html>
-body {
-  font-family: 'Arial', sans-serif;
-  background: #f4f4f9;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-}
+  <script>
+    document.getElementById('btn-validar').addEventListener('click', validarCertificado);
 
-header {
-  background-color: #ffffff;
-  padding: 30px 10px 20px;
-  border-bottom: 1px solid #ccc;
-}
+    async function validarCertificado() {
+      const chave = document.getElementById('input-chave').value.trim();
+      const resultado = document.getElementById('resultado-validacao');
 
-header img {
-  height: 80px;
-}
-
-h1 {
-  color: #0c344d;
-  font-size: 28px;
-  margin-top: 20px;
-}
-
-input[type="text"] {
-  padding: 10px;
-  width: 90%;
-  max-width: 400px;
-  margin-top: 20px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-button {
-  margin-top: 10px;
-  padding: 10px 20px;
-  border: none;
-  background-color: #2196f3;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #1976d2;
-}
-
-#resultado-validacao {
-  margin: 30px auto;
-  max-width: 600px;
-}
-
-.baloes {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 1;
-  pointer-events: none;
-  background: url('https://cdn.pixabay.com/photo/2013/07/13/10/24/balloons-157157_1280.png') repeat-x top center;
-  animation: flutuar 10s linear infinite;
-  opacity: 0.15;
-}
-
-@keyframes flutuar {
-  from { background-position-y: 100vh; }
-  to { background-position-y: -200vh; }
-}
-
-footer {
-  background-color: #003c4d;
-  color: white;
-  padding: 20px;
-  margin-top: 60px;
-}
-
-footer a {
-  color: #90caf9;
-  margin: 0 10px;
-  text-decoration: none;
-}
-
-@media (max-width: 600px) {
-  input[type="text"] {
-    width: 95%;
-  }
-  h1 {
-    font-size: 22px;
-  }
-}
-
-document.getElementById('btn-validar').addEventListener('click', validarCertificado);
-
-async function validarCertificado() {
-  const chave = document.getElementById('input-chave').value.trim();
-  const resultado = document.getElementById('resultado-validacao');
-
-  if (!chave) {
-    resultado.innerHTML = `
-      <div style="text-align: center; padding: 20px; background: #ffe6e6; border: 2px solid #e57373; border-radius: 12px;">
-        <h2 style="color: #c62828;">❌ Por favor, insira uma chave válida</h2>
-      </div>
-    `;
-    return;
-  }
-
-  resultado.innerHTML = `
-    <div style="text-align: center; padding: 20px; background: #f9f9f9; border: 2px solid #ddd; border-radius: 12px;">
-      <h3 style="color: #555;">🔎 Verificando certificado...</h3>
-    </div>
-  `;
-
-  try {
-    const res = await fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vR9V30aB2G1oyLILEaD1rlo3H8rOARS-HfiHiT50ZBqCzLt6p4ijaGbfVgrTYDJS50TfOcMBTsOtuhb/pub?gid=1982449420&single=true&output=csv");
-    const csv = await res.text();
-    const linhas = csv.split("\n").slice(1);
-
-    let encontrado = false;
-
-    for (let linha of linhas) {
-      const [nome, curso, data_emissao, chave_planilha] = linha.trim().split(",");
-      if (chave_planilha === chave) {
-        document.body.insertAdjacentHTML('beforeend', '<div class="baloes"></div>');
+      if (!chave) {
         resultado.innerHTML = `
-          <div style="text-align: center; padding: 30px; background: #e0f7fa; border: 2px solid #4caf50; border-radius: 16px;">
-            <h2 style="color: #2e7d32;">✅ Certificado Válido</h2>
-            <p><strong>${nome}</strong></p>
-            <p>Concluiu o curso: <strong>${curso}</strong></p>
-            <p>Data de conclusão: <strong>${data_emissao}</strong></p>
-            <div style="margin-top: 20px;"><img src='https://cdn-icons-png.flaticon.com/512/190/190411.png' alt='Selo de autenticidade' width='80'/></div>
+          <div style="text-align: center; padding: 20px; background: #ffe6e6; border: 2px solid #e57373; border-radius: 12px;">
+            <h2 style="color: #c62828;">❌ Por favor, insira uma chave válida</h2>
           </div>
         `;
-        encontrado = true;
-        break;
+        return;
       }
-    }
 
-    if (!encontrado) {
       resultado.innerHTML = `
-        <div style="text-align: center; padding: 20px; background: #ffe6e6; border: 2px solid #e57373; border-radius: 12px;">
-          <h2 style="color: #c62828;">❌ Certificado não encontrado</h2>
-          <p>Verifique a chave digitada ou entre em contato com o emissor.</p>
+        <div style="text-align: center; padding: 20px; background: #f9f9f9; border: 2px solid #ddd; border-radius: 12px;">
+          <h3 style="color: #555;">🔎 Verificando certificado...</h3>
         </div>
       `;
+
+      try {
+        const res = await fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vR9V30aB2G1oyLILEaD1rlo3H8rOARS-HfiHiT50ZBqCzLt6p4ijaGbfVgrTYDJS50TfOcMBTsOtuhb/pub?gid=1982449420&single=true&output=csv");
+        const csv = await res.text();
+        const linhas = csv.split("\n").slice(1);
+
+        let encontrado = false;
+
+        for (let linha of linhas) {
+          const [nome, curso, data_emissao, chave_planilha] = linha.trim().split(",");
+          if (chave_planilha === chave) {
+            document.body.insertAdjacentHTML('beforeend', '<div class="baloes"></div>');
+            resultado.innerHTML = `
+              <div style="text-align: center; padding: 30px; background: #e0f7fa; border: 2px solid #4caf50; border-radius: 16px;">
+                <h2 style="color: #2e7d32;">✅ Certificado Válido</h2>
+                <p><strong>${nome}</strong></p>
+                <p>Concluiu o curso: <strong>${curso}</strong></p>
+                <p>Data de conclusão: <strong>${data_emissao}</strong></p>
+                <div style="margin-top: 20px;"><img src='https://cdn-icons-png.flaticon.com/512/190/190411.png' alt='Selo de autenticidade' width='80'/></div>
+              </div>
+            `;
+            encontrado = true;
+            break;
+          }
+        }
+
+        if (!encontrado) {
+          resultado.innerHTML = `
+            <div style="text-align: center; padding: 20px; background: #ffe6e6; border: 2px solid #e57373; border-radius: 12px;">
+              <h2 style="color: #c62828;">❌ Certificado não encontrado</h2>
+              <p>Verifique a chave digitada ou entre em contato com o emissor.</p>
+            </div>
+          `;
+        }
+      } catch (e) {
+        resultado.innerHTML = `
+          <div style="text-align: center; padding: 20px; background: #fffde7; border: 2px solid #fdd835; border-radius: 12px;">
+            <h2 style="color: #f9a825;">⚠️ Erro ao validar</h2>
+            <p>Tente novamente em instantes.</p>
+          </div>
+        `;
+      }
     }
-  } catch (e) {
-    resultado.innerHTML = `
-      <div style="text-align: center; padding: 20px; background: #fffde7; border: 2px solid #fdd835; border-radius: 12px;">
-        <h2 style="color: #f9a825;">⚠️ Erro ao validar</h2>
-        <p>Tente novamente em instantes.</p>
-      </div>
-    `;
-  }
-}
+  </script>
+</body>
+</html>
