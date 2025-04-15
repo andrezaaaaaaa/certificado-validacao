@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Validação de Certificado</title>
+  <link rel="icon" type="image/png" href="https://i.ibb.co/xX8WZ8R/decole-favicon.png" />
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #f4f4f9;
+      margin: 0;
+      padding: 0 20px;
+      text-align: center;
+    }
+    header {
+      background-color: #fff;
+      padding: 20px;
+      border-bottom: 1px solid #ccc;
+    }
+    header img {
+      height: 60px;
+    }
+    h1 {
+      color: #0c344d;
+      margin-top: 10px;
+    }
+    input[type="text"] {
+      padding: 10px;
+      width: 100%;
+      max-width: 400px;
+      margin-top: 20px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      border: none;
+      background-color: #2196f3;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #1976d2;
+    }
+    #resultado-validacao {
+      margin-top: 30px;
+    }
+    .baloes {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 999;
+      pointer-events: none;
+      background: url('https://cdn.pixabay.com/photo/2013/07/13/10/24/balloons-157157_1280.png') repeat-x top center;
+      animation: flutuar 8s linear infinite;
+      opacity: 0.2;
+    }
+    @keyframes flutuar {
+      from { background-position-y: 100vh; }
+      to { background-position-y: -200vh; }
+    }
+    footer {
+      margin-top: 60px;
+      padding: 20px;
+      background-color: #003c4d;
+      color: white;
+    }
+    footer a {
+      color: #90caf9;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+    @media (max-width: 600px) {
+      input[type="text"] {
+        width: 90%;
+      }
+      h1 {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="https://i.ibb.co/4prx3Dm/logo-decole.png" alt="Logo Decole Educacional">
+    <h1>Validação de Certificado</h1>
+    <p>Insira a chave do certificado para validar:</p>
+    <input type="text" id="input-chave" placeholder="Ex: abc123xyz">
+    <br>
+    <button onclick="validarCertificado()">Validar</button>
+  </header>
+  <div id="resultado-validacao"></div>
+  <footer>
+    <p>© 2025 Decole Educacional. Todos os direitos reservados.</p>
+    <p>
+      <a href="https://decole.co/" target="_blank">Site Oficial</a> |
+      <a href="https://www.instagram.com/decolecontabildigital/" target="_blank">Instagram</a> |
+      WhatsApp: 0800 580 3080
+    </p>
+  </footer>
+
+  <script>
+    async function validarCertificado() {
+      const chave = document.getElementById('input-chave').value.trim();
+      if (!chave) return;
+
+      const resultado = document.getElementById('resultado-validacao');
+      resultado.innerHTML = `
+        <div style="text-align: center; padding: 20px; background: #f9f9f9; border: 2px solid #ddd; border-radius: 12px;">
+          <h3 style="color: #555;">🔎 Verificando certificado...</h3>
+        </div>
+      `;
+
+      try {
+        const res = await fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vR9V30aB2G1oyLILEaD1rlo3H8rOARS-HfiHiT50ZBqCzLt6p4ijaGbfVgrTYDJS50TfOcMBTsOtuhb/pub?gid=1982449420&single=true&output=csv");
+        const csv = await res.text();
+        const linhas = csv.split("\n").slice(1);
+
+        let encontrado = false;
+
+        for (let linha of linhas) {
+          const colunas = linha.trim().replace(/"/g, "").split(",");
+          if (colunas.length < 4) continue;
+
+          const nome = colunas[0].trim();
+          const curso = colunas[1].trim();
+          const data_emissao = colunas[2].trim();
+          const chave_planilha = colunas[3].replace(/[\r\n]+/g, "").trim();
+
+          if (chave_planilha === chave) {
+            document.body.insertAdjacentHTML('beforeend', '<div class="baloes"></div>');
+            resultado.innerHTML = `
+              <div style="text-align: center; padding: 30px; background: #e0f7fa; border: 2px solid #4caf50; border-radius: 16px;">
+                <h2 style="color: #2e7d32;">✅ Certificado Válido</h2>
+                <p><strong>${nome}</strong></p>
+                <p>Concluiu o curso: <strong>${curso}</strong></p>
+                <p>Data de conclusão: <strong>${data_emissao}</strong></p>
+                <div style="margin-top: 20px;"><img src='https://cdn-icons-png.flaticon.com/512/190/190411.png' alt='Selo de autenticidade' width='80'/></div>
+              </div>
+            `;
+            encontrado = true;
+            break;
+          }
+        }
+
+        if (!encontrado) {
+          resultado.innerHTML = `
+            <div style="text-align: center; padding: 20px; background: #fff3f3; border: 2px solid #e57373; border-radius: 12px;">
+              <h2 style="color: #c62828;">❌ Certificado não encontrado</h2>
+              <p>Verifique a chave digitada ou entre em contato com o emissor.</p>
+            </div>
+          `;
+        }
+      } catch (e) {
+        resultado.innerHTML = `
+          <div style="text-align: center; padding: 20px; background: #fffde7; border: 2px solid #fdd835; border-radius: 12px;">
+            <h2 style="color: #f9a825;">⚠️ Erro ao validar</h2>
+            <p>Tente novamente em instantes.</p>
+          </div>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>
