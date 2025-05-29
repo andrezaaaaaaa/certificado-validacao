@@ -11,10 +11,15 @@
       --texto: #f8e1e7;
     }
 
-    body {
+    html, body {
       margin: 0;
+      padding: 0;
+      background-color: #000000; /* Garantido */
+      color: var(--texto);
       font-family: 'Open Sans', sans-serif;
-      background: var(--fundo);
+    }
+
+    body {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -22,7 +27,6 @@
       min-height: 100vh;
       text-align: center;
       padding: 2rem;
-      color: var(--texto);
     }
 
     h1, p {
@@ -88,7 +92,7 @@
     const textoTitulo = "Alguns finais não precisam de aviso.";
     const linha1 = "Esta página foi retirada do ar por quem a criou.";
     const linha2 = "Às vezes, silenciar é o jeito mais sincero de dizer: foi importante, mas agora é passado.";
-    const linha3 = "Seja feliz na vida.";
+    const linha3 = "Seja feliz na vida..";
 
     function escreverTexto(elementId, texto) {
       const elemento = document.getElementById(elementId);
