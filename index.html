@@ -7,8 +7,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Open+Sans&display=swap" rel="stylesheet">
   <style>
     :root {
-      --fundo: #f8e1e7;
-      --texto: #7b1c36;
+      --fundo: #000000;
+      --texto: #f8e1e7;
     }
 
     body {
@@ -27,6 +27,9 @@
 
     h1, p {
       white-space: pre-wrap;
+      opacity: 0;
+      filter: blur(4px);
+      transition: opacity 1s ease, filter 1s ease;
     }
 
     h1 {
@@ -45,6 +48,9 @@
     .emoji {
       font-size: 3rem;
       margin-bottom: 1rem;
+      opacity: 0;
+      filter: blur(4px);
+      animation: fadeIn 1.2s forwards;
     }
 
     .cursor {
@@ -61,11 +67,18 @@
         visibility: hidden;
       }
     }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        filter: blur(0);
+      }
+    }
   </style>
 </head>
 <body>
 
-  <div class="emoji">🌙</div>
+  <div class="emoji" style="animation-delay: 0.5s;">🌙</div>
   <h1><span id="titulo"></span><span class="cursor"></span></h1>
   <p id="linha1"></p>
   <p id="linha2"></p>
@@ -77,14 +90,18 @@
     const linha2 = "Às vezes, silenciar é o jeito mais sincero de dizer: foi importante, mas agora é passado.";
     const linha3 = "Seja feliz na vida.";
 
-    function escreverTexto(elementId, texto, delay) {
+    function escreverTexto(elementId, texto) {
       const elemento = document.getElementById(elementId);
       let i = 0;
       return new Promise(resolve => {
         const intervalo = setInterval(() => {
           if (i <= texto.length) {
-            elemento.innerHTML = texto.substring(0, i);
+            elemento.textContent = texto.substring(0, i);
             i++;
+            if (i === 1) {
+              elemento.style.opacity = "1";
+              elemento.style.filter = "blur(0)";
+            }
           } else {
             clearInterval(intervalo);
             resolve();
@@ -94,12 +111,10 @@
     }
 
     async function iniciarDigitacao() {
-      await escreverTexto("titulo", textoTitulo, 500);
-      await escreverTexto("linha1", linha1, 400);
-      await escreverTexto("linha2", linha2, 400);
-      await escreverTexto("linha3", linha3, 400);
-
-      // Oculta o cursor após tudo ser digitado (opcional)
+      await escreverTexto("titulo", textoTitulo);
+      await escreverTexto("linha1", linha1);
+      await escreverTexto("linha2", linha2);
+      await escreverTexto("linha3", linha3);
       document.querySelector(".cursor").style.display = "none";
     }
 
